@@ -3,14 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta content="width=device-width, initla-scale=1.0" name="viewport" />
-    <meta copntent="ie=edge" http-equiv="X-UA-Compatible" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
     <title>Around the U.S</title>
     <link href="./pages/index.css" rel="stylesheet" />
   </head>
   <body class="page">
     <div class="page__content">
       <header class="header page__section">
-        <img src="./images/Header-Logo.svg" alt="Around the U.S logo" />
+        <img
+          class="header__logo"
+          src="./images/Header-Logo.svg"
+          alt="Around the U.S logo"
+        />
       </header>
       <main class="content">
         <section class="profile page__section">
@@ -21,10 +25,10 @@
           />
           <div class="profile__info">
             <h1 class="profile__title">Jacques Cousteau</h1>
-            <button class="profile__edit-button"></button>
+            <button class="profile__edit-button" type="button"></button>
             <p class="profile__description">Explorer</p>
           </div>
-          <button class="profile__add-button"></button>
+          <button class="profile__add-button" type="button"></button>
         </section>
         <section class="cards page__section">
           <ul class="cards__list">
@@ -36,7 +40,7 @@
               />
               <div class="card__description">
                 <h2 class="card__description-title">Yosemite Valley</h2>
-                <button class="card__like-button"></button>
+                <button class="card__like-button" type="button"></button>
               </div>
             </li>
             <li class="card">
@@ -97,7 +101,11 @@
           </ul>
         </section>
       </main>
-      <footer class="footer">&copy; Jonathan W Brandt 2024</footer>
+      <footer class="footer">
+        <p class="footer__copyright">&copy; Jonathan W Brandt 2024</p>
+      </footer>
     </div>
+
+    <script src="./scripts/index.js"></script>
   </body>
 </html>
