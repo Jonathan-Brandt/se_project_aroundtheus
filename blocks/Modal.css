@@ -2,5 +2,74 @@
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+}
+
+.modal__container {
+  width: 430px;
+  height: 330px;
   background-color: #fff;
+  margin: auto;
+  padding: 36px;
+  border-radius: 10px;
+  padding: 0;
+  position: relative;
+}
+
+.modal__close {
+  background-color: transparent;
+  cursor: pointer;
+  position: absolute;
+  top: -45px;
+  right: -45px;
+  height: 40px;
+  width: 40px;
+  background-image: url(../images/Close\ Icon.svg);
+  border: none;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.modal__header {
+  color: black;
+  font: "Inter";
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29.05px;
+  margin: 34px 64px 54px 36px;
+  padding: 0;
+}
+
+.modal__form-input-title {
+  margin: 0 36px 29.74px 36px;
+  width: 358px;
+  height: 27.26px;
+  padding: 0;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.modal__form-input-description {
+  margin: 0 36px 48px 36px;
+  width: 358px;
+  height: 27.26px;
+  padding: 0;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.modal__button {
+  padding: 0;
+  margin: 0 36px 36.51px;
+  width: 358px;
+  height: 50.15px;
+  border-radius: 2px;
+  color: white;
+  background-color: black;
+  border-style: none;
+  overflow: hidden;
 }
