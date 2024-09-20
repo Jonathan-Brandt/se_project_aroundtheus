@@ -77,3 +77,8 @@
   border-style: none;
   overflow: hidden;
 }
+
+.modal__button:hover{
+  background-color: rgba(61, 61, 61, 0.5);
+  transition: 0.3s;
+}
