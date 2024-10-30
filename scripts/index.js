@@ -34,7 +34,7 @@ const initialCards = [
 const cardListElement = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
-const modal = document.querySelector(".modal");
+const closeButtons = document.querySelectorAll(".modal__close");
 
 /*Profile*/
 
@@ -45,8 +45,8 @@ const profileModalCloseButton = document.querySelector(
 );
 const profileTitle = document.querySelector("#profile__title");
 const profileDescription = document.querySelector(".profile__description");
-const profileTitleInput = document.querySelector("#modal-title");
-const profileDescriptionInput = document.querySelector("#modal-description");
+const profileTitleInput = document.querySelector("#profile-name");
+const profileDescriptionInput = document.querySelector("#profile-description");
 const profileEditForm = profileEditModal.querySelector("#modal-edit-form");
 
 /*Cards*/
@@ -56,6 +56,7 @@ const addNewCardButton = document.querySelector(".profile__add-button");
 const cardModalCloseButton = document.querySelector("#card-modal-close-button");
 const cardTitleInput = addCardModal.querySelector(".modal__input_type_title");
 const cardUrlInput = addCardModal.querySelector(".modal__input_type_url");
+const newCardEditForm = addCardModal.querySelector("#add-card-form");
 
 /*Preview*/
 
@@ -70,8 +71,12 @@ const previewModalCaption = previewModal.querySelector(".modal__caption");
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
 
-function closePopUp(modal) {
-  modal.classList.remove("modal__opened");
+function closePopUp(popup) {
+  popup.classList.remove("modal_opened");
+}
+
+function openPopup(popup) {
+  popup.classList.add("modal_opened");
 }
 
 function getCardElement(data) {
@@ -90,7 +95,7 @@ function getCardElement(data) {
   });
 
   cardImageElement.addEventListener("click", () => {
-    previewModal.classList.add("modal__opened");
+    openPopup(previewModal);
     previewModalImage.src = data.link;
     previewModalImage.alt = data.name;
     previewModalCaption.textContent = data.name;
@@ -122,6 +127,7 @@ function handleAddCardSubmit(e) {
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
   renderCard({ name, link }, cardListElement);
+  e.target.reset({ name, link });
   closePopUp(addCardModal);
 }
 
@@ -141,29 +147,20 @@ function handlePreviewClose(e) {
 profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
-  profileEditModal.classList.add("modal__opened");
-});
-
-profileModalCloseButton.addEventListener("click", () => {
-  closePopUp(profileEditModal);
+  openPopup(profileEditModal);
 });
 
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 
-addCardModal.addEventListener("submit", handleAddCardSubmit);
-
-previewModal.addEventListener("click", handlePreviewClose);
+newCardEditForm.addEventListener("submit", handleAddCardSubmit);
 
 addNewCardButton.addEventListener("click", () => {
-  addCardModal.classList.add("modal__opened");
+  openPopup(addCardModal);
 });
 
-cardModalCloseButton.addEventListener("click", () => {
-  closePopUp(addCardModal);
-});
-
-previewModalCloseButton.addEventListener("click", () => {
-  closePopUp(previewModal);
+closeButtons.forEach((button) => {
+  const popup = button.closest(".modal");
+  button.addEventListener("click", () => closePopUp(popup));
 });
 
 /* -------------------------------------------------------------------------- */
@@ -174,5 +171,3 @@ initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
   cardListElement.append(cardElement);
 });
-
-// To whom ever reviews this, please let me know how I can improve my Java script to be more concise :)
