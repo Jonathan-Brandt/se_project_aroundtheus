@@ -133,6 +133,15 @@
   transition: 0.3s;
 }
 
+.modal__button_disabled {
+  color: black;
+  background-color: white;
+  opacity: 0.2;
+  border-radius: 1px;
+  border-style: solid;
+  border-color: black;
+}
+
 @media screen and (max-width: 540px) {
   .modal {
   }

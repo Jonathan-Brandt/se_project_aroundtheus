@@ -1,3 +1,15 @@
+import Card from "./card.js";
+import FormValidator from "./formvalidator.js";
+
+const config = {
+  formSelector: ".modal__form",
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -24,6 +36,14 @@ const initialCards = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
   },
 ];
+
+const cardData = {
+  name: "Yosemite Valley",
+  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+};
+
+const card = new Card(cardData, "#card-template");
+card.getView();
 
 /* -------------------------------------------------------------------------- */
 /*                                  Elements                                  */
@@ -62,10 +82,17 @@ const newCardEditForm = addCardModal.querySelector("#add-card-form");
 
 const previewModal = document.querySelector("#preview-modal");
 const previewModalCloseButton = document.querySelector(
-  "#card-modal-close-button"
+  "#preview-modal-close-button"
 );
 const previewModalImage = previewModal.querySelector(".modal__image");
 const previewModalCaption = previewModal.querySelector(".modal__caption");
+
+/*Form Validators*/
+const newCardFormValidator = new FormValidator(config, newCardEditForm);
+newCardFormValidator.enableValidation();
+
+const profileFormValidator = new FormValidator(config, profileEditForm);
+profileFormValidator.enableValidation();
 
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
@@ -73,10 +100,14 @@ const previewModalCaption = previewModal.querySelector(".modal__caption");
 
 function closePopUp(popup) {
   popup.classList.remove("modal_opened");
+  popup.removeEventListener("mousedown", handleCloseOverlay);
+  document.removeEventListener("keydown", handleCloseEsc);
 }
 
 function openPopup(popup) {
   popup.classList.add("modal_opened");
+  popup.addEventListener("mousedown", handleCloseOverlay);
+  document.addEventListener("keydown", handleCloseEsc);
 }
 
 function getCardElement(data) {
@@ -127,7 +158,7 @@ function handleAddCardSubmit(e) {
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
   renderCard({ name, link }, cardListElement);
-  e.target.reset({ name, link });
+  e.target.reset();
   closePopUp(addCardModal);
 }
 
@@ -138,6 +169,19 @@ function handleDeleteCard(e) {
 function handlePreviewClose(e) {
   e.preventDefault();
   closePopUp(previewModal);
+}
+
+function handleCloseOverlay(e) {
+  if (e.target.classList.contains("modal_opened")) {
+    closePopUp(e.target);
+  }
+}
+
+function handleCloseEsc(e) {
+  if (e.key === "Escape") {
+    const modal = document.querySelector(".modal_opened");
+    closePopUp(modal);
+  }
 }
 
 /* -------------------------------------------------------------------------- */
