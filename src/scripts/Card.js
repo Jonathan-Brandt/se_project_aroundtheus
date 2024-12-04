@@ -3,7 +3,7 @@ export default class Card {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
-    this._handleImageClick = handleImageClick;
+    this._handleImageClick = this._handleImageClick.bind(this);
   }
 
   _setEventListeners() {
@@ -34,6 +34,24 @@ export default class Card {
     this._cardElement
       .querySelector(".card__like-button")
       .classList.toggle("card__like-button_active");
+  }
+
+  _handleImageClick(name, link) {
+    const modal = document.querySelector(".modal");
+
+    if (modal) {
+      const nameElement = modal.querySelector(".card__description");
+      const imageElement = modal.querySelector(".card__image");
+
+      if (nameElement && imageElement) {
+        nameElement.textContent = name;
+        imageElement.src = link;
+      } else {
+        console.log("Name or image element not found.");
+      }
+    } else {
+      console.log("Modal not found.");
+    }
   }
 
   getView() {
