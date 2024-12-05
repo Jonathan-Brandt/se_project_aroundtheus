@@ -9,8 +9,8 @@ import UserInfo from "../scripts/UserInfo.js";
 import { initialCards } from "../pages/utils/constants.js";
 
 const userInfo = new UserInfo({
-  nameSelector: ".profile__name",
-  jobSelector: ".profile__description",
+  nameSelector: "#profile-name",
+  jobSelector: "#profile-description",
 });
 
 const cardSection = new Section(
@@ -52,8 +52,45 @@ addCardFormValidator.enableValidation();
 
 cardSection.renderItems();
 
+const cardContainer = document.querySelector(".cards__list"); // The container for the cards
+
+// Functions
+
 function handleImageClick(data) {
   popupWithImage.open(data);
+}
+
+function handleEditProfileFormSubmit(inputValues) {
+  // Use a method to update the profile info, e.g., userInfo.setUserInfo()
+  userInfo.setUserInfo(inputValues);
+  editProfileModal.close(); // Close the modal after updating
+  console.log(inputValues);
+}
+
+function handleAddCardFormSubmit(inputValues) {
+  // Use a method to create and add a new card
+  const newCard = createCard(inputValues); // Assume createCard is a method you have
+  cardContainer.append(newCard); // Append the new card to the container
+  addCardModal.close(); // Close the modal after adding the card
+  console.log(inputValues);
+}
+
+function createCard(data) {
+  // Create card elements
+  const card = document.createElement("div");
+  card.classList.add("card");
+
+  const cardImage = document.createElement("img");
+  cardImage.src = data.link;
+  cardImage.alt = data.name;
+  card.appendChild(cardImage);
+
+  const cardTitle = document.createElement("h3");
+  cardTitle.textContent = data.name;
+  card.appendChild(cardTitle);
+
+  // Return the complete card
+  return card;
 }
 
 // Select the buttons
@@ -61,8 +98,14 @@ const addCardButton = document.querySelector(".profile__add-button");
 const editProfileButton = document.querySelector(".profile__edit-button");
 
 // Select the modals
-const addCardModal = new PopupWithForm("#add-card-modal");
-const editProfileModal = new PopupWithForm("#profile-edit-modal");
+const addCardModal = new PopupWithForm(
+  "#add-card-modal",
+  handleAddCardFormSubmit
+);
+const editProfileModal = new PopupWithForm(
+  "#profile-edit-modal",
+  handleEditProfileFormSubmit
+);
 
 // Set up event listeners
 addCardButton.addEventListener("click", () => addCardModal.open());
