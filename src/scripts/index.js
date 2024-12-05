@@ -61,36 +61,20 @@ function handleImageClick(data) {
 }
 
 function handleEditProfileFormSubmit(inputValues) {
-  // Use a method to update the profile info, e.g., userInfo.setUserInfo()
   userInfo.setUserInfo(inputValues);
-  editProfileModal.close(); // Close the modal after updating
-  console.log(inputValues);
+  editProfileModal.close();
 }
 
 function handleAddCardFormSubmit(inputValues) {
-  // Use a method to create and add a new card
-  const newCard = createCard(inputValues); // Assume createCard is a method you have
-  cardContainer.append(newCard); // Append the new card to the container
-  addCardModal.close(); // Close the modal after adding the card
-  console.log(inputValues);
+  const newCard = createCard(inputValues);
+  cardSection.addItem(newCard);
+  addCardModal.close();
 }
 
 function createCard(data) {
-  // Create card elements
-  const card = document.createElement("div");
-  card.classList.add("card");
-
-  const cardImage = document.createElement("img");
-  cardImage.src = data.link;
-  cardImage.alt = data.name;
-  card.appendChild(cardImage);
-
-  const cardTitle = document.createElement("h3");
-  cardTitle.textContent = data.name;
-  card.appendChild(cardTitle);
-
-  // Return the complete card
-  return card;
+  const card = new Card(data, "#card-template", handleImageClick);
+  const cardElement = card.getView();
+  return cardElement;
 }
 
 // Select the buttons
