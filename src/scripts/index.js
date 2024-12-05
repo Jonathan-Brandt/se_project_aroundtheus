@@ -57,17 +57,16 @@ function handleImageClick(data) {
 }
 
 // Select the buttons
-const addCardButton = document.querySelector(".profile__add_button");
-const editProfileButton = document.querySelector(".profile__edit_button");
+const addCardButton = document.querySelector(".profile__add-button");
+const editProfileButton = document.querySelector(".profile__edit-button");
 
 // Select the modals
 const addCardModal = new PopupWithForm("#add-card-modal");
 const editProfileModal = new PopupWithForm("#profile-edit-modal");
 
-// Close the modals
-editProfileModal.close();
-addCardModal.close();
-
 // Set up event listeners
 addCardButton.addEventListener("click", () => addCardModal.open());
 editProfileButton.addEventListener("click", () => editProfileModal.open());
+
+editProfileModal.setEventListeners();
+addCardModal.setEventListeners();
