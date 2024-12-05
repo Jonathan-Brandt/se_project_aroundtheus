@@ -8,7 +8,6 @@ import PopupWithForm from "../scripts/PopupWithForm.js";
 import UserInfo from "../scripts/UserInfo.js";
 import { initialCards } from "../pages/utils/constants.js";
 
-// create instances of the classes
 const userInfo = new UserInfo({
   nameSelector: ".profile__name",
   jobSelector: ".profile__description",
@@ -18,7 +17,7 @@ const cardSection = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const card = new Card(item, "#card-template");
+      const card = new Card(item, "#card-template", handleImageClick);
       const cardElement = card.getView();
       cardSection.addItem(cardElement);
     },
@@ -26,7 +25,7 @@ const cardSection = new Section(
   ".cards__list"
 );
 
-const popupWithImage = new PopupWithImage(".modal__image");
+const popupWithImage = new PopupWithImage("#preview-modal");
 popupWithImage.setEventListeners();
 
 const popupWithForm = new PopupWithForm("#profile-edit-modal", (formData) => {
@@ -52,3 +51,23 @@ const addCardFormValidator = new FormValidator(config, modalAddForm);
 addCardFormValidator.enableValidation();
 
 cardSection.renderItems();
+
+function handleImageClick(data) {
+  popupWithImage.open(data);
+}
+
+// Select the buttons
+const addCardButton = document.querySelector(".profile__add_button");
+const editProfileButton = document.querySelector(".profile__edit_button");
+
+// Select the modals
+const addCardModal = new PopupWithForm("#add-card-modal");
+const editProfileModal = new PopupWithForm("#profile-edit-modal");
+
+// Close the modals
+editProfileModal.close();
+addCardModal.close();
+
+// Set up event listeners
+addCardButton.addEventListener("click", () => addCardModal.open());
+editProfileButton.addEventListener("click", () => editProfileModal.open());
