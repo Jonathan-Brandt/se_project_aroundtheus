@@ -61,7 +61,10 @@ function handleImageClick(data) {
 }
 
 function handleEditProfileFormSubmit(inputValues) {
-  userInfo.setUserInfo(inputValues);
+  userInfo.setUserInfo({
+    name: inputValues.title,
+    job: inputValues.description,
+  });
   editProfileModal.close();
 }
 
