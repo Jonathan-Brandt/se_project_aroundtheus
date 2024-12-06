@@ -66,13 +66,15 @@ function handleEditProfileFormSubmit(inputValues) {
 }
 
 function handleAddCardFormSubmit(inputValues) {
-  const newCard = createCard(inputValues);
+  const cardData = { name: inputValues.title, link: inputValues.url };
+  const newCard = createCard(cardData);
   cardSection.addItem(newCard);
   addCardModal.close();
+  console.log(inputValues);
 }
 
-function createCard(data) {
-  const card = new Card(data, "#card-template", handleImageClick);
+function createCard({ name, link }) {
+  const card = new Card({ name, link }, "#card-template", handleImageClick);
   const cardElement = card.getView();
   return cardElement;
 }
