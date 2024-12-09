@@ -34,7 +34,7 @@ export const initialCards = [
   },
 ];
 
-import FormValidator from "../../scripts/FormValidator";
+import FormValidator from "../../components/FormValidator";
 
 /* -------------------------------------------------------------------------- */
 /*                                  Elements                                  */
