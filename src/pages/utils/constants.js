@@ -77,10 +77,3 @@ const previewModalCloseButton = document.querySelector(
 );
 const previewModalImage = previewModal.querySelector(".modal__image");
 const previewModalCaption = previewModal.querySelector(".modal__caption");
-
-/*Form Validators*/
-const newCardFormValidator = new FormValidator(config, newCardEditForm);
-newCardFormValidator.enableValidation();
-
-const profileFormValidator = new FormValidator(config, profileEditForm);
-profileFormValidator.enableValidation();

@@ -1,4 +1,5 @@
 import "../pages/index.css";
+import "../pages/utils/constants.js";
 
 import FormValidator from "../scripts/FormValidator.js";
 import Card from "../scripts/Card.js";
@@ -9,8 +10,8 @@ import UserInfo from "../scripts/UserInfo.js";
 import { initialCards } from "../pages/utils/constants.js";
 
 const userInfo = new UserInfo({
-  nameSelector: "#profile-name",
-  jobSelector: "#profile-description",
+  nameSelector: ".profile__title",
+  jobSelector: ".profile__description",
 });
 
 const cardSection = new Section(
