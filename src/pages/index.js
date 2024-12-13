@@ -18,9 +18,8 @@ const cardSection = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const card = new Card(item, "#card-template", handleImageClick);
-      const cardElement = card.getView();
-      cardSection.addItem(cardElement);
+      const card = createCard(item);
+      cardSection.addItem(card);
     },
   },
   ".cards__list"
@@ -28,11 +27,6 @@ const cardSection = new Section(
 
 const popupWithImage = new PopupWithImage("#preview-modal");
 popupWithImage.setEventListeners();
-
-const popupWithForm = new PopupWithForm("#profile-edit-modal", (formData) => {
-  userInfo.setUserInfo(formData);
-});
-popupWithForm.setEventListeners();
 
 const config = {
   formSelector: ".modal__form",
@@ -74,7 +68,8 @@ function handleAddCardFormSubmit(inputValues) {
   const newCard = createCard(cardData);
   cardSection.addItem(newCard);
   addCardModal.close();
-  console.log(inputValues);
+  modalAddForm.reset(); // clear the form
+  addCardFormValidator.disableButton(); // disable the button
 }
 
 function createCard({ name, link }) {
@@ -99,7 +94,15 @@ const editProfileModal = new PopupWithForm(
 
 // Set up event listeners
 addCardButton.addEventListener("click", () => addCardModal.open());
-editProfileButton.addEventListener("click", () => editProfileModal.open());
+editProfileButton.addEventListener("click", () => {
+  const { job, name } = userInfo.getUserInfo(); // get the data
+  // here you'll insert the job, name into the inputs value
+  editProfileModal.open();
+});
 
 editProfileModal.setEventListeners();
 addCardModal.setEventListeners();
+
+//dev note for reviewer below
+
+// sorry about all of the resubmitions! I have been busy with college as this week was finals week. I thought maybe id need to send you the node_modules folder too to make my code work because I was not getting the error you were and all my modals worked.
