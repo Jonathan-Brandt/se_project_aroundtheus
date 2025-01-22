@@ -67,12 +67,12 @@ function handleEditProfileFormSubmit(inputValues) {
 }
 
 function handleDeleteCard(card) {
-  confirmModal.setSubmitFunction(() => {
+  confirmPopup.setSubmitFunction(() => {
     card.remove();
     card = null;
   });
 
-  confirmModal.open();
+  confirmPopup.open();
 }
 
 function handleAddCardFormSubmit(inputValues) {

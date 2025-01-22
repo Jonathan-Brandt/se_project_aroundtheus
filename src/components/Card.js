@@ -9,7 +9,7 @@ export default class Card {
     this._link = link;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
-    this._handleDeleteCard = this.remove;
+    this._handleDeleteCard = handleDeleteCard;
   }
 
   _setEventListeners() {
