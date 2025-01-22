@@ -66,6 +66,15 @@ function handleEditProfileFormSubmit(inputValues) {
   editProfileModal.close();
 }
 
+function handleDeleteCard(card) {
+  confirmModal.setSubmitFunction(() => {
+    card.remove();
+    card = null;
+  });
+
+  confirmModal.open();
+}
+
 function handleAddCardFormSubmit(inputValues) {
   const cardData = { name: inputValues.title, link: inputValues.url };
   const newCard = createCard(cardData);
@@ -76,7 +85,12 @@ function handleAddCardFormSubmit(inputValues) {
 }
 
 function createCard({ name, link }) {
-  const card = new Card({ name, link }, "#card-template", handleImageClick);
+  const card = new Card(
+    { name, link },
+    "#card-template",
+    handleImageClick,
+    handleDeleteCard
+  );
   const cardElement = card.getView();
   return cardElement;
 }

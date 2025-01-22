@@ -2,20 +2,16 @@ import Popup from "./Popup";
 
 export default class ConfirmPopup extends Popup {
   constructor(modalSelector) {
-    this._modal = document.querySelector("#confirmationModal");
-    this._submitFunction = null;
-    this._closeButton = this._closeButton("modal__close");
-    this._closeButton.addEventListener("click", () => this._close());
+    super(modalSelector);
   }
 
   setEventListener() {
-    this._modal
+    this._popup
       .querySelector(".confirm-button")
       .addEventListener("click", () => {
         if (this._submitFunction) {
           this._submitFunction();
         }
-        this._closeButton();
       });
   }
 
