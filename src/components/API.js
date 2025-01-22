@@ -18,7 +18,41 @@ class Api {
       .catch((error) => console.error("Error:", error));
   }
 
-  // other methods for working with the API
+  updateResource(id, data) {
+    return fetch(`${this._baseUrl}/resources/${id}`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return responese.json();
+        }
+        return Promise.reject(`Error: ${response.status}`);
+      })
+      .catch((error) => console.error("Error", error));
+  }
+
+  addCard(name, link) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        link: link,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Error: ${response.status}`);
+      })
+      .then((data) => {
+        console.log("Card added:", data);
+      })
+      .catch((error) => console.error("Error adding card:", error));
+  }
 }
 
 const api = new Api({

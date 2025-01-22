@@ -6,6 +6,7 @@ import Card from "../components/Card.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import ConfirmPopup from "../components/ConfirmPopup.js";
 import UserInfo from "../components/UserInfo.js";
 import { initialCards } from "./utils/constants.js";
 
@@ -27,6 +28,8 @@ const cardSection = new Section(
 
 const popupWithImage = new PopupWithImage("#preview-modal");
 popupWithImage.setEventListeners();
+
+const confirmPopup = new ConfirmPopup("#confirmationModal");
 
 const config = {
   formSelector: ".modal__form",
