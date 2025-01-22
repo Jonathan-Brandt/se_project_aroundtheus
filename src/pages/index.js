@@ -67,12 +67,20 @@ function handleEditProfileFormSubmit(inputValues) {
 }
 
 function handleDeleteCard(card) {
-  confirmPopup.setSubmitFunction(() => {
-    card.remove();
-    card = null;
-  });
+  {
+    confirmPopup.setSubmitFunction(() => {
+      api
+        .deleteCard(card.id)
+        .then(() => {
+          card.remove(); // Assuming card has a remove method
+        })
+        .catch((err) => {
+          console.error(`Error deleting card: ${err}`);
+        });
+    });
 
-  confirmPopup.open();
+    confirmPopup.open();
+  }
 }
 
 function handleAddCardFormSubmit(inputValues) {
