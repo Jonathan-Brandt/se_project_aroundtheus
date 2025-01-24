@@ -9,6 +9,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import ConfirmPopup from "../components/ConfirmPopup.js";
 import UserInfo from "../components/UserInfo.js";
 import { initialCards } from "./utils/constants.js";
+import api from "../components/API.js";
 
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
@@ -72,7 +73,7 @@ function handleDeleteCard(card) {
       api
         .deleteCard(card.id)
         .then(() => {
-          card.remove(); // Assuming card has a remove method
+          card.remove();
         })
         .catch((err) => {
           console.error(`Error deleting card: ${err}`);
@@ -120,14 +121,32 @@ const editProfileModal = new PopupWithForm(
 // Set up event listeners
 addCardButton.addEventListener("click", () => addCardModal.open());
 editProfileButton.addEventListener("click", () => {
-  const { job, name } = userInfo.getUserInfo(); // get the data
-  // here you'll insert the job, name into the inputs value
+  const { job, name } = userInfo.getUserInfo();
   editProfileModal.open();
 });
 
 editProfileModal.setEventListeners();
 addCardModal.setEventListeners();
 
-//dev note for reviewer below
+//The Accursed API
+const ApiCards = new api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "c371b666-258b-4f19-aeb9-028c93427d7f",
+    "Content-Type": "application/json",
+  },
+});
 
-// sorry about all of the resubmitions! I have been busy with college as this week was finals week. I thought maybe id need to send you the node_modules folder too to make my code work because I was not getting the error you were and all my modals worked.
+//The Foul Spawn of the API Demon
+ApiCards.getCards().then((cards) => {
+  cards.forEach((cardData) => {
+    const card = new Card(
+      cardData,
+      "#card-template",
+      handleImageClick,
+      handleCardDelete
+    );
+    const cardElement = card.generateCard();
+    document.querySelector(".cards-container").append(cardElement);
+  });
+});

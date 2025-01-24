@@ -1,4 +1,4 @@
-class Api {
+class api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._headerz = options.headers;
@@ -54,11 +54,3 @@ class Api {
       .catch((error) => console.error("Error adding card:", error));
   }
 }
-
-const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: "c371b666-258b-4f19-aeb9-028c93427d7f",
-    "Content-Type": "application/json",
-  },
-});
