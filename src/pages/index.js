@@ -9,7 +9,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import ConfirmPopup from "../components/ConfirmPopup.js";
 import UserInfo from "../components/UserInfo.js";
 import { initialCards } from "./utils/constants.js";
-import api from "../components/API.js";
+import API from "../components/API.js";
 
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
@@ -70,8 +70,7 @@ function handleEditProfileFormSubmit(inputValues) {
 function handleDeleteCard(card) {
   {
     confirmPopup.setSubmitFunction(() => {
-      api
-        .deleteCard(card.id)
+      API.deleteCard(card.id)
         .then(() => {
           card.remove();
         })
@@ -129,7 +128,7 @@ editProfileModal.setEventListeners();
 addCardModal.setEventListeners();
 
 //The Accursed API
-const ApiCards = new api({
+const ApiCards = new API({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
     authorization: "c371b666-258b-4f19-aeb9-028c93427d7f",
