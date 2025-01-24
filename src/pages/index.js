@@ -70,7 +70,8 @@ function handleEditProfileFormSubmit(inputValues) {
 function handleDeleteCard(card) {
   {
     confirmPopup.setSubmitFunction(() => {
-      API.deleteCard(card.id)
+      api
+        .deleteCard(card.id)
         .then(() => {
           card.remove();
         })
@@ -128,7 +129,7 @@ editProfileModal.setEventListeners();
 addCardModal.setEventListeners();
 
 //The Accursed API
-const ApiCards = new API({
+const api = new API({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
     authorization: "c371b666-258b-4f19-aeb9-028c93427d7f",
@@ -137,13 +138,13 @@ const ApiCards = new API({
 });
 
 //The Foul Spawn of the API Demon
-ApiCards.getCards().then((cards) => {
+api.getInitialCards().then((cards) => {
   cards.forEach((cardData) => {
     const card = new Card(
       cardData,
       "#card-template",
       handleImageClick,
-      handleCardDelete
+      handleDeleteCard
     );
     const cardElement = card.generateCard();
     document.querySelector(".cards-container").append(cardElement);
