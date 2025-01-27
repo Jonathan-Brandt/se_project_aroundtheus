@@ -147,6 +147,6 @@ api.getInitialCards().then((cards) => {
       handleDeleteCard
     );
     const cardElement = card.getView();
-    document.querySelector(".cards-container").prepend(cardElement);
+    document.querySelector(".elements__list").prepend(cardElement);
   });
 });
