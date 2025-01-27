@@ -146,7 +146,7 @@ api.getInitialCards().then((cards) => {
       handleImageClick,
       handleDeleteCard
     );
-    const cardElement = card.generateCard();
-    document.querySelector(".cards-container").append(cardElement);
+    const cardElement = card.getView();
+    document.querySelector(".cards-container").prepend(cardElement);
   });
 });
