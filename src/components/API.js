@@ -53,6 +53,21 @@ export default class API {
       })
       .catch((error) => console.error("Error adding card:", error));
   }
+
+  deleteCard(cardId) {
+    return (`${this._baseUrl}/cards/${cardId}`,
+    {
+      method: "DELETE",
+      headers: this._headers,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Error: ${response.status}`);
+      })
+      .catch((error) => console.error("Error deleting card:", error));
+  }
 }
 
 const api = new API({

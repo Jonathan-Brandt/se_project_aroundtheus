@@ -107,6 +107,7 @@ function createCard({ name, link }) {
 // Select the buttons
 const addCardButton = document.querySelector(".profile__add-button");
 const editProfileButton = document.querySelector(".profile__edit-button");
+const confirmationButton = document.querySelector(".confirmation__button");
 
 // Select the modals
 const addCardModal = new PopupWithForm(
