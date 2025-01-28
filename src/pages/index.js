@@ -127,6 +127,7 @@ editProfileButton.addEventListener("click", () => {
 
 editProfileModal.setEventListeners();
 addCardModal.setEventListeners();
+confirmPopup.setEventListeners();
 
 //The Accursed API
 const api = new API({
