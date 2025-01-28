@@ -148,5 +148,6 @@ api.getInitialCards().then((cards) => {
     );
     const cardElement = card.getView();
     document.querySelector(".elements__list").prepend(cardElement);
+    cardSection.addItem(cardElement);
   });
 });
