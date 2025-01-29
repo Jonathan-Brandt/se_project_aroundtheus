@@ -5,9 +5,10 @@ export default class ConfirmPopup extends Popup {
     super(modalSelector);
   }
 
-  setEventListener() {
+  setEventListeners() {
+    super.setEventListeners();
     this._popup
-      .querySelector(".confirm-button")
+      .querySelector(".confirmation__button")
       .addEventListener("click", () => {
         if (this._submitFunction) {
           this._submitFunction();

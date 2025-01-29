@@ -78,6 +78,7 @@ function handleDeleteCard(card) {
         .catch((err) => {
           console.error(`Error deleting card: ${err}`);
         });
+      confirmPopup.close();
     });
 
     confirmPopup.open();
