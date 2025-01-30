@@ -81,6 +81,41 @@ export default class API {
       })
       .catch((error) => console.error("Error liking card:", error));
   }
+
+  dislikeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Error: ${response.status}`);
+      })
+      .catch((error) => console.error("Error disliking card:", error));
+  }
+
+  updateProfile(name, about) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        about: about,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Error: ${response.status}`);
+      })
+      .then((data) => {
+        console.log("Profile updated:", data);
+      })
+      .catch((error) => console.error("Error updating profile:", error));
+  }
 }
 
 const api = new API({

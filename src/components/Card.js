@@ -39,9 +39,24 @@ export default class Card {
   }
 
   _handleLikeIcon() {
-    this._cardElement
-      .querySelector(".card__like-button")
-      .classList.toggle("card__like-button_active");
+    const likeButton = this._cardElement.querySelector(".card__like-button");
+    const isLiked = likeButton.classList.contains("card__like-button_active");
+
+    if (isLiked) {
+      api
+        .dislikeCard(this._id)
+        .then(() => {
+          likeButton.classList.toggle("card__like-button_active");
+        })
+        .catch((err) => console.error("Error disliking card:", err));
+    } else {
+      api
+        .likeCard(this._id)
+        .then(() => {
+          likeButton.classList.toggle("card__like-button_active");
+        })
+        .catch((err) => console.error("Error liking card:", err));
+    }
   }
 
   getView() {
