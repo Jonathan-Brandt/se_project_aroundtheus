@@ -153,4 +153,5 @@ api.getInitialCards().then((cards) => {
     document.querySelector(".elements__list").prepend(cardElement);
     cardSection.addItem(cardElement);
   });
+  console.log("Fetched cards:", cards);
 });
