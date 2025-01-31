@@ -10,6 +10,7 @@ import ConfirmPopup from "../components/ConfirmPopup.js";
 import UserInfo from "../components/UserInfo.js";
 import { initialCards } from "./utils/constants.js";
 import API from "../components/API.js";
+import { isFinite } from "core-js/library/es6/number";
 
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
@@ -103,6 +104,24 @@ function createCard({ name, link }) {
   );
   const cardElement = card.getView();
   return cardElement;
+}
+
+function handleLikeCLick(card) {
+  if (card.isLiked) {
+    api
+      .dislikeCard(card._id)
+      .then(() => {
+        card._handleLikeIcon();
+      })
+      .catch((err) => console.error("Error disliking card:", err));
+  } else {
+    api
+      .likeCard(card._id)
+      .then(() => {
+        card._handleLikeIcon();
+      })
+      .catch((err) => console.error("Error liking card:", err));
+  }
 }
 
 // Select the buttons
