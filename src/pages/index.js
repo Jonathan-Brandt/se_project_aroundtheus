@@ -10,7 +10,6 @@ import ConfirmPopup from "../components/ConfirmPopup.js";
 import UserInfo from "../components/UserInfo.js";
 import { initialCards } from "./utils/constants.js";
 import API from "../components/API.js";
-import { isFinite } from "core-js/library/es6/number";
 
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
@@ -174,3 +173,20 @@ api.getInitialCards().then((cards) => {
   });
   console.log("Fetched cards:", cards);
 });
+
+function savingChanges(profileData) {
+  const saveButton = document.querySelector(".modal__button");
+  const originalText = saveButton.textContent;
+  saveButton.textContent = "Saving...";
+  api
+    .ubdateProfile(profileData)
+    .then(() => {
+      console.log("Profile updated:");
+    })
+    .catch((err) => {
+      console.error(`Error updating profile:", ${err}`);
+    })
+    .finally(() => {
+      saveButton.textContent = originalText;
+    });
+}
