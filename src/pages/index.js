@@ -18,7 +18,6 @@ const userInfo = new UserInfo({
 
 const cardSection = new Section(
   {
-    items: initialCards,
     renderer: (item) => {
       const card = createCard(item);
       cardSection.addItem(card);
@@ -49,8 +48,6 @@ const modalAddForm = document.querySelector("#add-card-form");
 const addCardFormValidator = new FormValidator(config, modalAddForm);
 addCardFormValidator.enableValidation();
 
-cardSection.renderItems();
-
 const cardContainer = document.querySelector(".cards__list"); // The container for the cards
 
 // Functions
@@ -71,7 +68,7 @@ function handleDeleteCard(card) {
   {
     confirmPopup.setSubmitFunction(() => {
       api
-        .deleteCard(card.id)
+        .deleteCard(card._id)
         .then(() => {
           card.remove();
         })
@@ -92,6 +89,9 @@ function handleAddCardFormSubmit(inputValues) {
   addCardModal.close();
   modalAddForm.reset(); // clear the form
   addCardFormValidator.disableButton(); // disable the button
+  api.createCard(cardData).then((newCard) => {
+    cardSection.addItem(newCard);
+  });
 }
 
 function createCard({ name, link }) {
@@ -160,18 +160,7 @@ const api = new API({
 
 //The Foul Spawn of the API Demon
 api.getInitialCards().then((cards) => {
-  cards.forEach((cardData) => {
-    const card = new Card(
-      cardData,
-      "#card-template",
-      handleImageClick,
-      handleDeleteCard
-    );
-    const cardElement = card.getView();
-    document.querySelector(".elements__list").prepend(cardElement);
-    cardSection.addItem(cardElement);
-  });
-  console.log("Fetched cards:", cards);
+  cardSection.renderItems(cards);
 });
 
 function savingChanges(profileData) {
