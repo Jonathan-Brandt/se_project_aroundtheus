@@ -82,10 +82,11 @@ function handleDeleteCard(card) {
   }
 }
 
-function handleAddCardFormSubmit() {
+function handleAddCardFormSubmit(inputValues) {
   const cardData = { name: inputValues.title, link: inputValues.url };
   api.addCard(cardData).then((newCard) => {
-    cardSection.addItem(newCard);
+    const cardElement = createCard(newCard);
+    cardSection.addItem(cardElement);
     addCardModal.close();
     modalAddForm.reset(); // clear the form
     addCardFormValidator.disableButton(); // disable the button
