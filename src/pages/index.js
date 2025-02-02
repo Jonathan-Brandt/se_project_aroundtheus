@@ -82,15 +82,13 @@ function handleDeleteCard(card) {
   }
 }
 
-function handleAddCardFormSubmit(inputValues) {
+function handleAddCardFormSubmit() {
   const cardData = { name: inputValues.title, link: inputValues.url };
-  const newCard = createCard(cardData);
-  cardSection.addItem(newCard);
-  addCardModal.close();
-  modalAddForm.reset(); // clear the form
-  addCardFormValidator.disableButton(); // disable the button
-  api.createCard(cardData).then((newCard) => {
+  api.addCard(cardData).then((newCard) => {
     cardSection.addItem(newCard);
+    addCardModal.close();
+    modalAddForm.reset(); // clear the form
+    addCardFormValidator.disableButton(); // disable the button
   });
 }
 
