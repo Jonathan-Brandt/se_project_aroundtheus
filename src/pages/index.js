@@ -104,7 +104,7 @@ function createCard(data) {
   return cardElement;
 }
 
-function handleLikeCLick(card) {
+function handleLikeClick(card) {
   if (card.isLiked) {
     api
       .dislikeCard(card._id)
@@ -126,6 +126,7 @@ function handleLikeCLick(card) {
 const addCardButton = document.querySelector(".profile__add-button");
 const editProfileButton = document.querySelector(".profile__edit-button");
 const confirmationButton = document.querySelector(".confirmation__button");
+const likeButton = document.querySelector(".card__like-button");
 
 // Select the modals
 const addCardModal = new PopupWithForm(
@@ -178,3 +179,5 @@ function savingChanges(profileData) {
       saveButton.textContent = originalText;
     });
 }
+
+likeButton.addEventListener("click", handleLikeClick.bind(this));
