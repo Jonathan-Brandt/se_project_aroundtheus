@@ -33,7 +33,7 @@ export default class API {
       .catch((error) => console.error("Error", error));
   }
 
-  addCard(name, link) {
+  addCard({ name, link }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
@@ -49,7 +49,7 @@ export default class API {
         return Promise.reject(`Error: ${response.status}`);
       })
       .then((data) => {
-        console.log("Card added:", data);
+        return data;
       })
       .catch((error) => console.error("Error adding card:", error));
   }

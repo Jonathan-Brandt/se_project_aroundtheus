@@ -93,9 +93,9 @@ function handleAddCardFormSubmit(inputValues) {
   });
 }
 
-function createCard({ name, link }) {
+function createCard(data) {
   const card = new Card(
-    { name, link },
+    data,
     "#card-template",
     handleImageClick,
     handleDeleteCard
