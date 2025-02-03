@@ -104,29 +104,10 @@ function createCard(data) {
   return cardElement;
 }
 
-function handleLikeClick(card) {
-  if (card.isLiked) {
-    api
-      .dislikeCard(card._id)
-      .then(() => {
-        card._handleLikeIcon();
-      })
-      .catch((err) => console.error("Error disliking card:", err));
-  } else {
-    api
-      .likeCard(card._id)
-      .then(() => {
-        card._handleLikeIcon();
-      })
-      .catch((err) => console.error("Error liking card:", err));
-  }
-}
-
 // Select the buttons
 const addCardButton = document.querySelector(".profile__add-button");
 const editProfileButton = document.querySelector(".profile__edit-button");
 const confirmationButton = document.querySelector(".confirmation__button");
-const likeButton = document.querySelector(".card__like-button");
 
 // Select the modals
 const addCardModal = new PopupWithForm(
@@ -180,4 +161,22 @@ function savingChanges(profileData) {
     });
 }
 
+function handleLikeClick(card) {
+  if (card.isLiked) {
+    api
+      .dislikeCard(card._id)
+      .then(() => {
+        card._handleLikeIcon();
+      })
+      .catch((err) => console.error("Error disliking card:", err));
+  } else {
+    api
+      .likeCard(card._id)
+      .then(() => {
+        card._handleLikeIcon();
+      })
+      .catch((err) => console.error("Error liking card:", err));
+  }
+}
+const likeButton = document.querySelector(".card__like-button");
 likeButton.addEventListener("click", handleLikeClick.bind(this));
