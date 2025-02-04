@@ -116,6 +116,20 @@ export default class API {
       })
       .catch((error) => console.error("Error updating profile:", error));
   }
+
+  getUserInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "GET",
+      headers: this._headers,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Error: ${response.status}`);
+      })
+      .catch((error) => console.error("Error getting user info:", error));
+  }
 }
 
 const api = new API({

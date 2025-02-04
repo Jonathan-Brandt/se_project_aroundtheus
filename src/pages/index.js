@@ -98,7 +98,8 @@ function createCard(data) {
     data,
     "#card-template",
     handleImageClick,
-    handleDeleteCard
+    handleDeleteCard,
+    handleLikeClick
   );
   const cardElement = card.getView();
   return cardElement;
@@ -144,6 +145,13 @@ api.getInitialCards().then((cards) => {
   cardSection.renderItems(cards);
 });
 
+api.getUserInfo().then((data) => {
+  userInfo.setUserInfo({
+    name: data.name,
+    job: data.about,
+  });
+});
+
 function savingChanges(profileData) {
   const saveButton = document.querySelector(".modal__button");
   const originalText = saveButton.textContent;
@@ -178,5 +186,3 @@ function handleLikeClick(card) {
       .catch((err) => console.error("Error liking card:", err));
   }
 }
-const likeButton = document.querySelector(".card__like-button");
-likeButton.addEventListener("click", handleLikeClick.bind(this));
