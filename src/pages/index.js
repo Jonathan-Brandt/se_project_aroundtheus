@@ -57,10 +57,18 @@ function handleImageClick(data) {
 }
 
 function handleEditProfileFormSubmit(inputValues) {
-  userInfo.setUserInfo({
-    name: inputValues.title,
-    job: inputValues.description,
-  });
+  const { title, description } = inputValues;
+  api
+    .updateProfile(title, description)
+    .then((data) => {
+      userInfo.setUserInfo({
+        name: data.name,
+        job: data.about,
+      });
+      document.getElementById("profile-name").textContent = data.name;
+      document.getElementById("profile-description").textContent = data.about;
+    })
+    .catch((err) => console.error(`Error updating profile:", ${err}`));
   editProfileModal.close();
 }
 
@@ -152,22 +160,22 @@ api.getUserInfo().then((data) => {
   });
 });
 
-function savingChanges(profileData) {
-  const saveButton = document.querySelector(".modal__button");
-  const originalText = saveButton.textContent;
-  saveButton.textContent = "Saving...";
-  api
-    .ubdateProfile(profileData)
-    .then(() => {
-      console.log("Profile updated:");
-    })
-    .catch((err) => {
-      console.error(`Error updating profile:", ${err}`);
-    })
-    .finally(() => {
-      saveButton.textContent = originalText;
-    });
-}
+// function savingChanges(profileData) {
+//   const saveButton = document.querySelector(".modal__button");
+//   const originalText = saveButton.textContent;
+//   saveButton.textContent = "Saving...";
+//   api
+//     .ubdateProfile(profileData)
+//     .then(() => {
+//       console.log("Profile updated:");
+//     })
+//     .catch((err) => {
+//       console.error(`Error updating profile:", ${err}`);
+//     })
+//     .finally(() => {
+//       saveButton.textContent = originalText;
+//     });
+// }
 
 function handleLikeClick(card) {
   if (card.isLiked) {
