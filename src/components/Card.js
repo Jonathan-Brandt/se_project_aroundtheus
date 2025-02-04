@@ -1,6 +1,6 @@
 export default class Card {
   constructor(
-    { _id, name, link },
+    { _id, name, link, isLiked },
     cardSelector,
     handleImageClick,
     handleDeleteCard,
@@ -9,6 +9,7 @@ export default class Card {
     this._id = _id;
     this._name = name;
     this._link = link;
+    this._isLiked = isLiked;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteCard = handleDeleteCard;
