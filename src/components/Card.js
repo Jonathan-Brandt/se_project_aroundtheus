@@ -58,6 +58,12 @@ export default class Card {
     this._cardElement.querySelector(".card__description-title").textContent =
       this._name;
 
+    if (this._isLiked) {
+      this._cardElement
+        .querySelector(".card__like-button")
+        .classList.add("card__like-button_active");
+    }
+
     this._setEventListeners();
 
     return this._cardElement;
