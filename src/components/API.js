@@ -79,6 +79,9 @@ export default class API {
         }
         return Promise.reject(`Error: ${response.status}`);
       })
+      .then((data) => {
+        return data.likes;
+      })
       .catch((error) => console.error("Error liking card:", error));
   }
 
@@ -93,9 +96,11 @@ export default class API {
         }
         return Promise.reject(`Error: ${response.status}`);
       })
+      .then((data) => {
+        return data.likes;
+      })
       .catch((error) => console.error("Error disliking card:", error));
   }
-
   updateProfile(name, about) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
@@ -113,6 +118,7 @@ export default class API {
       })
       .then((data) => {
         console.log("Profile updated:", data);
+        return data;
       })
       .catch((error) => console.error("Error updating profile:", error));
   }
@@ -129,6 +135,20 @@ export default class API {
         return Promise.reject(`Error: ${response.status}`);
       })
       .catch((error) => console.error("Error getting user info:", error));
+  }
+
+  getCardLikes(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Error: ${response.status}`);
+      })
+      .then((data) => {
+        return data.likes;
+      })
+      .catch((error) => console.error("Error getting card likes:", error));
   }
 }
 

@@ -65,8 +65,8 @@ function handleEditProfileFormSubmit(inputValues) {
         name: data.name,
         job: data.about,
       });
-      document.getElementById("profile-name").textContent = data.name;
-      document.getElementById("profile-description").textContent = data.about;
+      document.querySelector("#profile-name").textContent = data.name;
+      document.querySelector("#profile-description").textContent = data.about;
     })
     .catch((err) => console.error(`Error updating profile:", ${err}`));
   editProfileModal.close();
@@ -176,12 +176,12 @@ api.getUserInfo().then((data) => {
 //       saveButton.textContent = originalText;
 //     });
 // }
-
 function handleLikeClick(card) {
   if (card.isLiked) {
     api
       .dislikeCard(card._id)
       .then(() => {
+        card.isLiked = false; // Update the card's isLiked property
         card._handleLikeIcon();
       })
       .catch((err) => console.error("Error disliking card:", err));
@@ -189,6 +189,7 @@ function handleLikeClick(card) {
     api
       .likeCard(card._id)
       .then(() => {
+        card.isLiked = true; // Update the card's isLiked property
         card._handleLikeIcon();
       })
       .catch((err) => console.error("Error liking card:", err));
