@@ -31,6 +31,13 @@ popupWithImage.setEventListeners();
 
 const confirmPopup = new ConfirmPopup("#confirmationModal");
 
+const profileImage = document.querySelector(".profile__image");
+
+const profileImageModal = new PopupWithForm("#profile-image-modal");
+profileImage.addEventListener("click", () => {
+  profileImageModal.open();
+});
+
 const config = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
@@ -138,6 +145,7 @@ editProfileButton.addEventListener("click", () => {
 editProfileModal.setEventListeners();
 addCardModal.setEventListeners();
 confirmPopup.setEventListeners();
+profileImageModal.setEventListeners();
 
 //The Accursed API
 const api = new API({
@@ -181,7 +189,7 @@ function handleLikeClick(card) {
     api
       .dislikeCard(card._id)
       .then(() => {
-        card.isLiked = false; // Update the card's isLiked property
+        card.isLiked = false;
         card._handleLikeIcon();
       })
       .catch((err) => console.error("Error disliking card:", err));

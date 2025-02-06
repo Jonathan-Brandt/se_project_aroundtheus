@@ -37,6 +37,11 @@
   padding: 36px;
 }
 
+.modal__container_type_profile_image {
+  width: 430px;
+  height: 272px;
+}
+
 .modal__close {
   background-color: transparent;
   cursor: pointer;
@@ -85,6 +90,16 @@
 
 .confirmation__header {
   margin: 0 0 38px 0;
+}
+
+.profile-image-modal {
+  padding: 0;
+  width: 430px;
+  height: 272px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .modal__input {

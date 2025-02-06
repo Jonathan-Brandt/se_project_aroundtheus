@@ -79,6 +79,31 @@
         </form>
       </div>
     </div>
+    <!--Profile Image Modal-->
+    <div class="modal profile-image-modal" id="profile-image-modal">
+      <div class="modal__container modal__container_type_profile_image">
+        <button class="modal__close" id="profile-modal-close-button"></button>
+        <p class="modal__header profile-image-header">Change profile picture</p>
+        <form class="modal__form" id="modal-edit-form">
+          <input
+            class="modal__input"
+            id="profile-image-url"
+            placeholder="Profile Image URL"
+            type="text"
+            name="Profile Image URL"
+            maxlength="400"
+            minlength="2"
+            required
+          />
+          <span
+            class="modal__error modal__error_bottom"
+            id="profile-description-error"
+            >Please fill out this field</span
+          >
+          <button class="modal__button" id="profile-save-button">Save</button>
+        </form>
+      </div>
+    </div>
     <!--Card Modal-->
     <div class="modal" id="add-card-modal">
       <div class="modal__container">
