@@ -189,16 +189,16 @@ function handleLikeClick(card) {
     api
       .dislikeCard(card._id)
       .then(() => {
-        card.isLiked = false;
-        card._handleLikeIcon();
+        card.setIsLiked(false);
+        card.renderLike();
       })
       .catch((err) => console.error("Error disliking card:", err));
   } else {
     api
       .likeCard(card._id)
       .then(() => {
-        card.isLiked = true; // Update the card's isLiked property
-        card._handleLikeIcon();
+        card.setIsLiked(true);
+        card.renderLike();
       })
       .catch((err) => console.error("Error liking card:", err));
   }

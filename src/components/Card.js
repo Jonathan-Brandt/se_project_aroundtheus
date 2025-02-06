@@ -16,6 +16,23 @@ export default class Card {
     this._handleLikeClick = handleLikeClick;
   }
 
+  setIsLiked(isLiked) {
+    this._isLiked = isLiked;
+    this.renderLike();
+  }
+
+  renderLike() {
+    if (this._isLiked) {
+      this._cardElement
+        .querySelector(".card__like-button")
+        .classList.add("card__like-button_active");
+    } else {
+      this._cardElement
+        .querySelector(".card__like-button")
+        .classList.remove("card__like-button_active");
+    }
+  }
+
   _setEventListeners() {
     this._cardElement
       .querySelector(".card__like-button")
