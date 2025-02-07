@@ -150,6 +150,23 @@ export default class API {
       })
       .catch((error) => console.error("Error getting card likes:", error));
   }
+
+  updateProfilePicture(avatar) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({ avatar }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Error: ${response.status}`);
+      })
+      .catch((error) =>
+        console.error("Error updating profile picture:", error)
+      );
+  }
 }
 
 const api = new API({

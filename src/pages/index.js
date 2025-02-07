@@ -33,7 +33,10 @@ const confirmPopup = new ConfirmPopup("#confirmationModal");
 
 const profileImage = document.querySelector(".profile__image");
 
-const profileImageModal = new PopupWithForm("#profile-image-modal");
+const profileImageModal = new PopupWithForm(
+  "#profile-image-modal",
+  handleProfileImageFormSubmit
+);
 profileImage.addEventListener("click", () => {
   profileImageModal.open();
 });
@@ -122,6 +125,14 @@ function createCard(data) {
   );
   const cardElement = card.getView();
   return cardElement;
+}
+
+function handleProfileImageFormSubmit(inputValues) {
+  const imageData = { avatar: inputValues.avatar };
+  api.updateProfilePicture(imageData).then((data) => {
+    userInfo.setUserInfo(data);
+    profileImageModal.close();
+  });
 }
 
 // Select the buttons
