@@ -22,15 +22,9 @@ export default class Card {
   }
 
   renderLike() {
-    if (this._isLiked) {
-      this._cardElement
-        .querySelector(".card__like-button")
-        .classList.add("card__like-button_active");
-    } else {
-      this._cardElement
-        .querySelector(".card__like-button")
-        .classList.remove("card__like-button_active");
-    }
+    this._cardElement
+      .querySelector(".card__like-button")
+      .classList.toggle("card__like-button_active", this._isLiked);
   }
 
   _setEventListeners() {

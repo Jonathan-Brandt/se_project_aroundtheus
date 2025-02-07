@@ -98,14 +98,18 @@ function handleDeleteCard(card) {
 }
 
 function handleAddCardFormSubmit(inputValues) {
+  addCardModal.setSaving(true);
   const cardData = { name: inputValues.title, link: inputValues.url };
-  api.addCard(cardData).then((newCard) => {
-    const cardElement = createCard(newCard);
-    cardSection.addItem(cardElement);
-    addCardModal.close();
-    modalAddForm.reset(); // clear the form
-    addCardFormValidator.disableButton(); // disable the button
-  });
+  api
+    .addCard(cardData)
+    .then((newCard) => {
+      const cardElement = createCard(newCard);
+      cardSection.addItem(cardElement);
+      addCardModal.close();
+      modalAddForm.reset(); // clear the form
+      addCardFormValidator.disableButton(); // disable the button
+    })
+    .finally(() => addCardModal.setSaving(false));
 }
 
 function createCard(data) {
@@ -168,24 +172,8 @@ api.getUserInfo().then((data) => {
   });
 });
 
-// function savingChanges(profileData) {
-//   const saveButton = document.querySelector(".modal__button");
-//   const originalText = saveButton.textContent;
-//   saveButton.textContent = "Saving...";
-//   api
-//     .ubdateProfile(profileData)
-//     .then(() => {
-//       console.log("Profile updated:");
-//     })
-//     .catch((err) => {
-//       console.error(`Error updating profile:", ${err}`);
-//     })
-//     .finally(() => {
-//       saveButton.textContent = originalText;
-//     });
-// }
 function handleLikeClick(card) {
-  if (card.isLiked) {
+  if (card._isLiked) {
     api
       .dislikeCard(card._id)
       .then(() => {
