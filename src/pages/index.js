@@ -14,6 +14,7 @@ import API from "../components/API.js";
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
+  avatarSelector: ".profile__image",
 });
 
 const cardSection = new Section(
@@ -130,7 +131,7 @@ function createCard(data) {
 function handleProfileImageFormSubmit(inputValues) {
   const imageData = { avatar: inputValues.avatar };
   api.updateProfilePicture(imageData).then((data) => {
-    userInfo.setUserInfo(data);
+    userInfo.setUserAvatar(avatar.data);
     profileImageModal.close();
   });
 }
@@ -181,6 +182,7 @@ api.getUserInfo().then((data) => {
     name: data.name,
     job: data.about,
   });
+  userInfo.setUserAvatar(data.avatar);
 });
 
 function handleLikeClick(card) {
