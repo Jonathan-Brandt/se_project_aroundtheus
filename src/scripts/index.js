@@ -53,7 +53,7 @@ addCardFormValidator.enableValidation();
 
 cardSection.renderItems();
 
-const cardContainer = document.querySelector(".cards__list"); // The container for the cards
+const cardContainer = document.querySelector(".cards__list");
 
 // Functions
 
