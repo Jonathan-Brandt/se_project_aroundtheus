@@ -65,6 +65,7 @@ const cardContainer = document.querySelector(".cards__list");
 const profileImageForm = document.querySelector("#profile-image-modal");
 const profileImageFormValidator = new FormValidator(config, profileImageForm);
 profileImageFormValidator.enableValidation();
+
 // Functions
 
 function handleImageClick(data) {
@@ -139,6 +140,8 @@ function handleProfileImageFormSubmit(inputValues) {
     profileImage.src = data.avatar;
     profileImageModal.close();
   });
+  profileImageFormValidator.disableButton(config);
+  profileImageForm.reset();
 }
 
 // Select the buttons
