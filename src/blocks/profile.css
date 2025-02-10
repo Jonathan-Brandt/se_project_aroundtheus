@@ -67,19 +67,31 @@
 }
 
 .profile__image {
+  position: relative;
   height: 120px;
   width: 120px;
   border-radius: 50%;
   margin-right: 24px;
   object-fit: cover;
+  overflow: hidden;
+  text-indent: -9999px;
+}
+
+.profile__image:after {
+  content: attr(alt);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  white-space: nowrap;
 }
 
 .profile__edit-icon {
   display: none;
   position: absolute;
-  margin-right: 24px;
-  transform: translate(-50%, -50%);
   transition: opacity 0.2s ease-in-out;
+  margin: 47px;
 }
 
 .profile__image:hover {

@@ -38,6 +38,9 @@ const profileImageModal = new PopupWithForm(
   "#profile-image-modal",
   handleProfileImageFormSubmit
 );
+const profileImageModalValidator = new FormValidator(config, profileImageModal);
+profileImageModalValidator.enableValidation();
+
 profileImage.addEventListener("click", () => {
   profileImageModal.open();
 });
