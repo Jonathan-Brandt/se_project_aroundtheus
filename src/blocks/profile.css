@@ -75,6 +75,8 @@
   object-fit: cover;
   overflow: hidden;
   text-indent: -9999px;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .profile__image:after {
@@ -92,6 +94,12 @@
   position: absolute;
   transition: opacity 0.2s ease-in-out;
   margin: 47px;
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.profile__edit-icon:hover {
+  opacity: 1;
 }
 
 .profile__image:hover {
@@ -100,7 +108,6 @@
 
 .profile__image:hover + .profile__edit-icon {
   display: block;
-  opacity: 1;
 }
 
 @media screen and (max-width: 710px) {
