@@ -23,8 +23,10 @@ export default class FormValidator {
       "#" + inputEl.id + "-error"
     );
     inputEl.classList.remove(this._inputErrorClass);
-    errorMessageEl.textContent = "";
-    errorMessageEl.classList.remove(this._errorClass);
+    if (errorMessageEl) {
+      errorMessageEl.textContent = "";
+      errorMessageEl.classList.remove(this._errorClass);
+    }
   }
 
   _checkInputValidity(inputElement) {

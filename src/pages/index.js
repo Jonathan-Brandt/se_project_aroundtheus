@@ -38,8 +38,6 @@ const profileImageModal = new PopupWithForm(
   "#profile-image-modal",
   handleProfileImageFormSubmit
 );
-const profileImageModalValidator = new FormValidator(config, profileImageModal);
-profileImageModalValidator.enableValidation();
 
 profileImage.addEventListener("click", () => {
   profileImageModal.open();
@@ -62,8 +60,11 @@ const modalAddForm = document.querySelector("#add-card-form");
 const addCardFormValidator = new FormValidator(config, modalAddForm);
 addCardFormValidator.enableValidation();
 
-const cardContainer = document.querySelector(".cards__list"); // The container for the cards
+const cardContainer = document.querySelector(".cards__list");
 
+const profileImageForm = document.querySelector("#profile-image-modal");
+const profileImageFormValidator = new FormValidator(config, profileImageForm);
+profileImageFormValidator.enableValidation();
 // Functions
 
 function handleImageClick(data) {
@@ -134,7 +135,8 @@ function createCard(data) {
 function handleProfileImageFormSubmit(inputValues) {
   const imageData = { avatar: inputValues.avatar };
   api.updateProfilePicture(imageData).then((data) => {
-    userInfo.setUserAvatar(avatar.data);
+    const profileImage = document.querySelector(".profile__image");
+    profileImage.src = data.avatar;
     profileImageModal.close();
   });
 }
