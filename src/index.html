@@ -85,7 +85,7 @@
       <div class="modal__container modal__container_type_profile_image">
         <button class="modal__close" id="profile-modal-close-button"></button>
         <p class="modal__header profile-image-header">Change profile picture</p>
-        <form class="modal__form" id="modal-edit-form">
+        <form class="modal__form" id="modal-edit-avatar-form">
           <input
             class="modal__input"
             id="profile-image-url"
@@ -96,10 +96,8 @@
             minlength="2"
             required
           />
-          <span
-            class="modal__error modal__error_bottom"
-            id="profile-image-error"
-            >Please fill out this field</span
+          <span class="modal__error" id="profile-image-url-error"
+            >Please enter a valid URL</span
           >
           <button class="modal__button" id="profile-save-button">Save</button>
         </form>

@@ -62,7 +62,7 @@ addCardFormValidator.enableValidation();
 
 const cardContainer = document.querySelector(".cards__list");
 
-const profileImageForm = document.querySelector("#profile-image-modal");
+const profileImageForm = document.querySelector("#modal-edit-avatar-form");
 const profileImageFormValidator = new FormValidator(config, profileImageForm);
 profileImageFormValidator.enableValidation();
 
