@@ -134,7 +134,7 @@ function createCard(data) {
 function handleProfileImageFormSubmit(inputValues) {
   const imageData = { avatar: inputValues.avatar };
   api.updateProfilePicture(imageData).then((data) => {
-    userInfo.setUserInfo({ avatar: data.avatar });
+    userInfo.setUserInfo(imageData);
     profileImageModal.close();
     profileImageFormValidator.disableButton(config);
     profileImageForm.reset();
@@ -178,17 +178,28 @@ const api = new API({
 });
 
 //The Foul Spawn of the API Demon
-api.getInitialCards().then((cards) => {
-  cardSection.renderItems(cards);
-});
+function handleError(err) {
+  console.error("Request failed:", err);
+}
 
-api.getUserInfo().then((data) => {
-  userInfo.setUserInfo({
-    name: data.name,
-    job: data.about,
-  });
-  userInfo.setUserInfo(data.avatar);
-});
+api
+  .getInitialCards()
+  .then((cards) => {
+    cardSection.renderItems(cards);
+  })
+  .catch(handleError);
+
+api
+  .getUserInfo()
+  .then((data) => {
+    userInfo.setUserInfo({
+      name: data.name,
+      job: data.about,
+      avatar: data.avatar,
+    });
+    userInfo.setUserInfo(data.avatar);
+  })
+  .catch(handleError);
 
 function handleLikeClick(card) {
   if (card._isLiked) {
@@ -198,7 +209,7 @@ function handleLikeClick(card) {
         card.setIsLiked(false);
         card.renderLike();
       })
-      .catch((err) => console.error("Error disliking card:", err));
+      .catch(handleError);
   } else {
     api
       .likeCard(card._id)
@@ -206,6 +217,6 @@ function handleLikeClick(card) {
         card.setIsLiked(true);
         card.renderLike();
       })
-      .catch((err) => console.error("Error liking card:", err));
+      .catch(handleError);
   }
 }
