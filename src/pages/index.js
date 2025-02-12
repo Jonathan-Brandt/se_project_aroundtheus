@@ -81,11 +81,9 @@ function handleEditProfileFormSubmit(inputValues) {
         name: data.name,
         job: data.about,
       });
-      document.querySelector("#profile-name").textContent = data.name;
-      document.querySelector("#profile-description").textContent = data.about;
+      editProfileModal.close();
     })
     .catch((err) => console.error(`Error updating profile:", ${err}`));
-  editProfileModal.close();
 }
 
 function handleDeleteCard(card) {
@@ -136,12 +134,11 @@ function createCard(data) {
 function handleProfileImageFormSubmit(inputValues) {
   const imageData = { avatar: inputValues.avatar };
   api.updateProfilePicture(imageData).then((data) => {
-    const profileImage = document.querySelector(".profile__image");
-    profileImage.src = data.avatar;
+    userInfo.setUserInfo({ avatar: data.avatar });
     profileImageModal.close();
+    profileImageFormValidator.disableButton(config);
+    profileImageForm.reset();
   });
-  profileImageFormValidator.disableButton(config);
-  profileImageForm.reset();
 }
 
 // Select the buttons
@@ -190,7 +187,7 @@ api.getUserInfo().then((data) => {
     name: data.name,
     job: data.about,
   });
-  userInfo.setUserAvatar(data.avatar);
+  userInfo.setUserInfo(data.avatar);
 });
 
 function handleLikeClick(card) {

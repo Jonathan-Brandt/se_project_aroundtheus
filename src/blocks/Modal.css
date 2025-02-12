@@ -221,6 +221,13 @@
     margin: 45px 0 0 0;
   }
 
+  .confirmation__button {
+    width: 238px;
+    height: 46px;
+    font-size: 14px;
+    line-height: 16.94px;
+  }
+
   .modal__close {
     width: 26px;
     height: 26px;

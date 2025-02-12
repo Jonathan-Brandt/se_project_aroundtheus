@@ -4,18 +4,18 @@ export default class API {
     this._headers = options.headers;
   }
 
+  _checkResponse(response) {
+    if (response.ok) {
+      return response.json();
+    }
+    return Promise.reject(`Error: ${response.status}`);
+  }
+
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       method: "GET",
       headers: this._headers,
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject("Error:", error);
-      })
-      .catch((error) => console.error("Error:", error));
+    }).then(this._checkResponse);
   }
 
   updateResource(id, data) {
@@ -23,14 +23,7 @@ export default class API {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify(data),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return responese.json();
-        }
-        return Promise.reject(`Error: ${response.status}`);
-      })
-      .catch((error) => console.error("Error", error));
+    }).then(this._checkResponse);
   }
 
   addCard({ name, link }) {
@@ -42,30 +35,17 @@ export default class API {
         link: link,
       }),
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Error: ${response.status}`);
-      })
+      .then(this._checkResponse)
       .then((data) => {
         return data;
-      })
-      .catch((error) => console.error("Error adding card:", error));
+      });
   }
 
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Error: ${response.status}`);
-      })
-      .catch((error) => console.error("Error deleting card:", error));
+    }).then(this._checkResponse);
   }
 
   likeCard(cardId) {
@@ -73,16 +53,10 @@ export default class API {
       method: "PUT",
       headers: this._headers,
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Error: ${response.status}`);
-      })
+      .then(this._checkResponse)
       .then((data) => {
         return data.likes;
-      })
-      .catch((error) => console.error("Error liking card:", error));
+      });
   }
 
   dislikeCard(cardId) {
@@ -90,17 +64,12 @@ export default class API {
       method: "DELETE",
       headers: this._headers,
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Error: ${response.status}`);
-      })
+      .then(this._checkResponse)
       .then((data) => {
         return data.likes;
-      })
-      .catch((error) => console.error("Error disliking card:", error));
+      });
   }
+
   updateProfile(name, about) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
@@ -110,45 +79,28 @@ export default class API {
         about: about,
       }),
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Error: ${response.status}`);
-      })
+      .then(this._checkResponse)
       .then((data) => {
         console.log("Profile updated:", data);
         return data;
-      })
-      .catch((error) => console.error("Error updating profile:", error));
+      });
   }
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: this._headers,
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Error: ${response.status}`);
-      })
-      .catch((error) => console.error("Error getting user info:", error));
+    }).then(this._checkResponse);
   }
 
   getCardLikes(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`)
       .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Error: ${response.status}`);
+        this._checkResponse(response);
       })
       .then((data) => {
         return data.likes;
-      })
-      .catch((error) => console.error("Error getting card likes:", error));
+      });
   }
 
   updateProfilePicture(avatar) {
@@ -156,23 +108,8 @@ export default class API {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify(avatar),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Error: ${response.status}`);
-      })
-      .catch((error) =>
-        console.error("Error updating profile picture:", error)
-      );
+    }).then((response) => {
+      this._checkResponse(response);
+    });
   }
 }
-
-const api = new API({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: "c371b666-258b-4f19-aeb9-028c93427d7f",
-    "Content-Type": "application/json",
-  },
-});
