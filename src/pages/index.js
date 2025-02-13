@@ -17,6 +17,10 @@ const userInfo = new UserInfo({
   avatarSelector: ".profile__image",
 });
 
+const profileNameInput = document.querySelector("#profile-name");
+const profileJobInput = document.querySelector("#profile-description");
+const profileImageInput = document.querySelector("#profile-image");
+
 const cardSection = new Section(
   {
     renderer: (item) => {
@@ -28,6 +32,7 @@ const cardSection = new Section(
 );
 
 const popupWithImage = new PopupWithImage("#preview-modal");
+
 popupWithImage.setEventListeners();
 
 const confirmPopup = new ConfirmPopup("#confirmationModal");
@@ -74,6 +79,7 @@ function handleImageClick(data) {
 
 function handleEditProfileFormSubmit(inputValues) {
   const { title, description } = inputValues;
+
   api
     .updateProfile(title, description)
     .then((data) => {
@@ -82,8 +88,10 @@ function handleEditProfileFormSubmit(inputValues) {
         job: data.about,
       });
       editProfileModal.close();
+      editProfileModal.setSaving(true);
     })
-    .catch(handleError);
+    .catch(handleError)
+    .finally(() => editProfileModal.setSaving(false));
 }
 
 function handleDeleteCard(card) {
@@ -113,6 +121,7 @@ function handleAddCardFormSubmit(inputValues) {
       addCardModal.close();
       modalAddForm.reset();
       addCardFormValidator.disableButton();
+      addCardModal.setSaving(true);
     })
     .catch(handleError)
     .finally(() => addCardModal.setSaving(false));
@@ -139,8 +148,10 @@ function handleProfileImageFormSubmit(inputValues) {
       profileImageModal.close();
       profileImageFormValidator.disableButton(config);
       profileImageForm.reset();
+      profileImageModal.setSaving(true);
     })
-    .catch(handleError);
+    .catch(handleError)
+    .finally(() => profileImageModal.setSaving(false));
 }
 
 // Select the buttons
@@ -162,6 +173,8 @@ const editProfileModal = new PopupWithForm(
 addCardButton.addEventListener("click", () => addCardModal.open());
 editProfileButton.addEventListener("click", () => {
   const { job, name } = userInfo.getUserInfo();
+  profileNameInput.value = name;
+  profileJobInput.value = job;
   editProfileModal.open();
 });
 
