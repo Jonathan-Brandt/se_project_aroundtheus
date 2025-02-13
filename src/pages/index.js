@@ -79,7 +79,7 @@ function handleImageClick(data) {
 
 function handleEditProfileFormSubmit(inputValues) {
   const { title, description } = inputValues;
-
+  editProfileModal.setSaving(true);
   api
     .updateProfile(title, description)
     .then((data) => {
@@ -88,7 +88,6 @@ function handleEditProfileFormSubmit(inputValues) {
         job: data.about,
       });
       editProfileModal.close();
-      editProfileModal.setSaving(true);
     })
     .catch(handleError)
     .finally(() => editProfileModal.setSaving(false));
@@ -141,6 +140,7 @@ function createCard(data) {
 
 function handleProfileImageFormSubmit(inputValues) {
   const imageData = { avatar: inputValues.avatar };
+  profileImageModal.setSaving(true);
   api
     .updateProfilePicture(imageData)
     .then((data) => {
@@ -148,7 +148,6 @@ function handleProfileImageFormSubmit(inputValues) {
       profileImageModal.close();
       profileImageFormValidator.disableButton(config);
       profileImageForm.reset();
-      profileImageModal.setSaving(true);
     })
     .catch(handleError)
     .finally(() => profileImageModal.setSaving(false));
