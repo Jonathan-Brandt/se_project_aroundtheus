@@ -8,7 +8,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import ConfirmPopup from "../components/ConfirmPopup.js";
 import UserInfo from "../components/UserInfo.js";
-import { initialCards } from "./utils/constants.js";
+//import { initialCards } from "./utils/constants.js";
 import API from "../components/API.js";
 
 const userInfo = new UserInfo({
@@ -83,7 +83,7 @@ function handleEditProfileFormSubmit(inputValues) {
       });
       editProfileModal.close();
     })
-    .catch((err) => console.error(`Error updating profile:", ${err}`));
+    .catch(handleError);
 }
 
 function handleDeleteCard(card) {
@@ -93,11 +93,9 @@ function handleDeleteCard(card) {
         .deleteCard(card._id)
         .then(() => {
           card.remove();
+          confirmPopup.close();
         })
-        .catch((err) => {
-          console.error(`Error deleting card: ${err}`);
-        });
-      confirmPopup.close();
+        .catch(handleError);
     });
 
     confirmPopup.open();
@@ -113,9 +111,10 @@ function handleAddCardFormSubmit(inputValues) {
       const cardElement = createCard(newCard);
       cardSection.addItem(cardElement);
       addCardModal.close();
-      modalAddForm.reset(); // clear the form
-      addCardFormValidator.disableButton(); // disable the button
+      modalAddForm.reset();
+      addCardFormValidator.disableButton();
     })
+    .catch(handleError)
     .finally(() => addCardModal.setSaving(false));
 }
 
@@ -133,12 +132,15 @@ function createCard(data) {
 
 function handleProfileImageFormSubmit(inputValues) {
   const imageData = { avatar: inputValues.avatar };
-  api.updateProfilePicture(imageData).then((data) => {
-    userInfo.setUserInfo(imageData);
-    profileImageModal.close();
-    profileImageFormValidator.disableButton(config);
-    profileImageForm.reset();
-  });
+  api
+    .updateProfilePicture(imageData)
+    .then((data) => {
+      userInfo.setUserInfo(imageData);
+      profileImageModal.close();
+      profileImageFormValidator.disableButton(config);
+      profileImageForm.reset();
+    })
+    .catch(handleError);
 }
 
 // Select the buttons

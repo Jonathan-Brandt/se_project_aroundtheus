@@ -19,12 +19,4 @@ export default class ConfirmPopup extends Popup {
   setSubmitFunction(submitFunction) {
     this._submitFunction = submitFunction;
   }
-
-  open() {
-    super.open();
-  }
-
-  close() {
-    super.close();
-  }
 }
