@@ -10,7 +10,7 @@ export default class ConfirmPopup extends Popup {
 
   setSaving(isSaving) {
     if (isSaving) {
-      this._submitButton.textContent = "Saving...";
+      this._submitButton.textContent = "Deleting...";
     } else {
       this._submitButton.textContent = this._submitbuttonTextContent;
     }

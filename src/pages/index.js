@@ -96,10 +96,12 @@ function handleEditProfileFormSubmit(inputValues) {
 function handleDeleteCard(card) {
   {
     confirmPopup.setSubmitFunction(() => {
+      confirmPopup.setSaving(true);
       api
         .deleteCard(card._id)
         .then(() => {
           card.remove();
+          confirmPopup.setSaving(false);
           confirmPopup.close();
         })
         .catch(handleError);
