@@ -1,6 +1,7 @@
 import "../pages/index.css";
 import "./utils/constants.js";
 
+//import config from "./utils/constants.js";
 import FormValidator from "../components/FormValidator.js";
 import Card from "../components/Card.js";
 import Section from "../components/Section.js";
@@ -10,6 +11,15 @@ import ConfirmPopup from "../components/ConfirmPopup.js";
 import UserInfo from "../components/UserInfo.js";
 //import { initialCards } from "./utils/constants.js";
 import API from "../components/API.js";
+
+const config = {
+  formSelector: ".modal__form",
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
 
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
@@ -47,15 +57,6 @@ const profileImageModal = new PopupWithForm(
 profileImage.addEventListener("click", () => {
   profileImageModal.open();
 });
-
-const config = {
-  formSelector: ".modal__form",
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_visible",
-};
 
 const modalEditForm = document.querySelector("#modal-edit-form");
 const profileEditFormValidator = new FormValidator(config, modalEditForm);
@@ -102,7 +103,6 @@ function handleDeleteCard(card) {
         .then(() => {
           card.remove();
           confirmPopup.setSaving(false);
-          confirmPopup.close();
         })
         .catch(handleError);
     });
@@ -218,9 +218,9 @@ api
   .catch(handleError);
 
 function handleLikeClick(card) {
-  if (card._isLiked) {
+  if (card.getIsLiked()) {
     api
-      .dislikeCard(card._id)
+      .dislikeCard(card.getId())
       .then(() => {
         card.setIsLiked(false);
         card.renderLike();
@@ -228,7 +228,7 @@ function handleLikeClick(card) {
       .catch(handleError);
   } else {
     api
-      .likeCard(card._id)
+      .likeCard(card.getId())
       .then(() => {
         card.setIsLiked(true);
         card.renderLike();

@@ -79,4 +79,12 @@ export default class Card {
 
     return this._cardElement;
   }
+
+  getId() {
+    return this._id;
+  }
+
+  getIsLiked() {
+    return this._isLiked;
+  }
 }
