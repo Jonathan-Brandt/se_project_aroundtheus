@@ -42,7 +42,7 @@ import FormValidator from "../../components/FormValidator";
 
 /*Generics*/
 
-const cardListElement = document.querySelector(".cards__list");
+const cardContainer = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 const closeButtons = document.querySelectorAll(".modal__close");
