@@ -10,6 +10,10 @@ import ConfirmPopup from "../components/ConfirmPopup.js";
 import UserInfo from "../components/UserInfo.js";
 import { config, initialCards } from "./utils/constants.js";
 import API from "../components/API.js";
+import {
+  profileTitleInput,
+  profileDescriptionInput,
+} from "./utils/constants.js";
 
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
@@ -160,8 +164,8 @@ const editProfileModal = new PopupWithForm(
 addCardButton.addEventListener("click", () => addCardModal.open());
 editProfileButton.addEventListener("click", () => {
   const { job, name } = userInfo.getUserInfo();
-  profileNameInput.value = name;
-  profileJobInput.value = job;
+  profileTitleInput.value = name;
+  profileDescriptionInput.value = job;
   editProfileModal.open();
 });
 

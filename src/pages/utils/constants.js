@@ -56,8 +56,10 @@ const profileModalCloseButton = document.querySelector(
 );
 const profileTitle = document.querySelector("#profile__title");
 const profileDescription = document.querySelector(".profile__description");
-const profileTitleInput = document.querySelector("#profile-name");
-const profileDescriptionInput = document.querySelector("#profile-description");
+export const profileTitleInput = document.querySelector("#profile-name");
+export const profileDescriptionInput = document.querySelector(
+  "#profile-description"
+);
 const profileEditForm = profileEditModal.querySelector("#modal-edit-form");
 
 /*Cards*/
