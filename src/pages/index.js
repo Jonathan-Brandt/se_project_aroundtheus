@@ -8,12 +8,16 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import ConfirmPopup from "../components/ConfirmPopup.js";
 import UserInfo from "../components/UserInfo.js";
-import { config, initialCards } from "./utils/constants.js";
-import API from "../components/API.js";
 import {
+  config,
+  initialCards,
+  newCardEditForm,
+  profileEditForm,
   profileTitleInput,
   profileDescriptionInput,
+  profileImageForm,
 } from "./utils/constants.js";
+import API from "../components/API.js";
 
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
@@ -48,17 +52,12 @@ profileImage.addEventListener("click", () => {
   profileImageModal.open();
 });
 
-const modalEditForm = document.querySelector("#modal-edit-form");
-const profileEditFormValidator = new FormValidator(config, modalEditForm);
+const profileEditFormValidator = new FormValidator(config, profileEditForm);
 profileEditFormValidator.enableValidation();
 
-const modalAddForm = document.querySelector("#add-card-form");
-const addCardFormValidator = new FormValidator(config, modalAddForm);
+const addCardFormValidator = new FormValidator(config, newCardEditForm);
 addCardFormValidator.enableValidation();
 
-const cardContainer = document.querySelector(".cards__list");
-
-const profileImageForm = document.querySelector("#modal-edit-avatar-form");
 const profileImageFormValidator = new FormValidator(config, profileImageForm);
 profileImageFormValidator.enableValidation();
 
@@ -93,6 +92,7 @@ function handleDeleteCard(card) {
         .then(() => {
           card.remove();
           confirmPopup.setSaving(false);
+          confirmPopup.close();
         })
         .catch(handleError);
     });

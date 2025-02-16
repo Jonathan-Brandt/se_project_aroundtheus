@@ -42,7 +42,7 @@ import FormValidator from "../../components/FormValidator";
 
 /*Generics*/
 
-const cardContainer = document.querySelector(".cards__list");
+export const cardContainer = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 const closeButtons = document.querySelectorAll(".modal__close");
@@ -60,7 +60,11 @@ export const profileTitleInput = document.querySelector("#profile-name");
 export const profileDescriptionInput = document.querySelector(
   "#profile-description"
 );
-const profileEditForm = profileEditModal.querySelector("#modal-edit-form");
+export const profileEditForm =
+  profileEditModal.querySelector("#modal-edit-form");
+export const profileImageForm = document.querySelector(
+  "#modal-edit-avatar-form"
+);
 
 /*Cards*/
 
@@ -69,7 +73,7 @@ const addNewCardButton = document.querySelector(".profile__add-button");
 const cardModalCloseButton = document.querySelector("#card-modal-close-button");
 const cardTitleInput = addCardModal.querySelector(".modal__input_type_title");
 const cardUrlInput = addCardModal.querySelector(".modal__input_type_url");
-const newCardEditForm = addCardModal.querySelector("#add-card-form");
+export const newCardEditForm = addCardModal.querySelector("#add-card-form");
 
 /*Preview*/
 
