@@ -110,9 +110,8 @@ function handleAddCardFormSubmit(inputValues) {
       const cardElement = createCard(newCard);
       cardSection.addItem(cardElement);
       addCardModal.close();
-      modalAddForm.reset();
+      newCardEditForm.reset();
       addCardFormValidator.disableButton();
-      addCardModal.setSaving(true);
     })
     .catch(handleError)
     .finally(() => addCardModal.setSaving(false));
