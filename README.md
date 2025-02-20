@@ -26,4 +26,4 @@ https://github.com/Jonathan-Brandt/se_project_aroundtheus
 
 **Video Tour**
 
-https://screenrec.com/share/0Xh8yFAJO3
+https://screenrec.com/share/jgFEoH8Bn7
