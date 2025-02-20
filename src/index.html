@@ -17,19 +17,20 @@
       </header>
       <main class="content">
         <section class="profile page__section">
+          <img class="profile__image" src="" alt="Profile Picture" />
           <img
-            class="profile__image"
-            src="<%=require('./images/Jacques_Cousteau.png')%>"
-            alt="Logo"
+            class="profile__edit-icon"
+            src="<%=require('./images/profile-edit-icon.svg')%>"
+            alt="Edit Profile"
           />
           <div class="profile__info">
-            <h1 class="profile__title" id="profile__title">Jacques Cousteau</h1>
+            <h1 class="profile__title" id="profile__title"></h1>
             <button
               class="profile__edit-button"
               id="profile-edit-button"
               type="button"
             ></button>
-            <p class="profile__description">Explorer</p>
+            <p class="profile__description"></p>
           </div>
           <button class="profile__add-button" type="button"></button>
         </section>
@@ -74,6 +75,29 @@
             class="modal__error modal__error_bottom"
             id="profile-description-error"
             >Please fill out this field</span
+          >
+          <button class="modal__button" id="profile-save-button">Save</button>
+        </form>
+      </div>
+    </div>
+    <!--Profile Image Modal-->
+    <div class="modal" id="profile-image-modal">
+      <div class="modal__container modal__container_type_profile_image">
+        <button class="modal__close" id="profile-modal-close-button"></button>
+        <p class="modal__header profile-image-header">Change profile picture</p>
+        <form class="modal__form" id="modal-edit-avatar-form">
+          <input
+            class="modal__input"
+            id="profile-image-url"
+            placeholder="Profile Image URL"
+            type="text"
+            name="avatar"
+            maxlength="400"
+            minlength="2"
+            required
+          />
+          <span class="modal__error" id="profile-image-url-error"
+            >Please enter a valid URL</span
           >
           <button class="modal__button" id="profile-save-button">Save</button>
         </form>
@@ -124,6 +148,20 @@
         ></button>
         <img class="modal__image" src="#" alt="#" />
         <p class="modal__caption"></p>
+      </div>
+    </div>
+    <!--Confirmation Modal-->
+    <div class="modal" id="confirmationModal">
+      <div class="modal__container modal__container_type_confirmation">
+        <button class="modal__close" id="confirmation-close-button"></button>
+        <h2 class="modal__header confirmation__header">Are you sure?</h2>
+        <button
+          class="confirmation__button"
+          id="confirmation-button"
+          type="button"
+        >
+          Yes
+        </button>
       </div>
     </div>
     <!-- Container for cards -->

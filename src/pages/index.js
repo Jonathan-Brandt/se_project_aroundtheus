@@ -6,17 +6,27 @@ import Card from "../components/Card.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import ConfirmPopup from "../components/ConfirmPopup.js";
 import UserInfo from "../components/UserInfo.js";
-import { initialCards } from "./utils/constants.js";
+import {
+  config,
+  initialCards,
+  newCardEditForm,
+  profileEditForm,
+  profileTitleInput,
+  profileDescriptionInput,
+  profileImageForm,
+} from "./utils/constants.js";
+import API from "../components/API.js";
 
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
+  avatarSelector: ".profile__image",
 });
 
 const cardSection = new Section(
   {
-    items: initialCards,
     renderer: (item) => {
       const card = createCard(item);
       cardSection.addItem(card);
@@ -26,28 +36,30 @@ const cardSection = new Section(
 );
 
 const popupWithImage = new PopupWithImage("#preview-modal");
+
 popupWithImage.setEventListeners();
 
-const config = {
-  formSelector: ".modal__form",
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_visible",
-};
+const confirmPopup = new ConfirmPopup("#confirmationModal");
 
-const modalEditForm = document.querySelector("#modal-edit-form");
-const profileEditFormValidator = new FormValidator(config, modalEditForm);
+const profileImage = document.querySelector(".profile__image");
+
+const profileImageModal = new PopupWithForm(
+  "#profile-image-modal",
+  handleProfileImageFormSubmit
+);
+
+profileImage.addEventListener("click", () => {
+  profileImageModal.open();
+});
+
+const profileEditFormValidator = new FormValidator(config, profileEditForm);
 profileEditFormValidator.enableValidation();
 
-const modalAddForm = document.querySelector("#add-card-form");
-const addCardFormValidator = new FormValidator(config, modalAddForm);
+const addCardFormValidator = new FormValidator(config, newCardEditForm);
 addCardFormValidator.enableValidation();
 
-cardSection.renderItems();
-
-const cardContainer = document.querySelector(".cards__list"); // The container for the cards
+const profileImageFormValidator = new FormValidator(config, profileImageForm);
+profileImageFormValidator.enableValidation();
 
 // Functions
 
@@ -56,31 +68,86 @@ function handleImageClick(data) {
 }
 
 function handleEditProfileFormSubmit(inputValues) {
-  userInfo.setUserInfo({
-    name: inputValues.title,
-    job: inputValues.description,
-  });
-  editProfileModal.close();
+  const { title, description } = inputValues;
+  editProfileModal.setSaving(true);
+  api
+    .updateProfile(title, description)
+    .then((data) => {
+      userInfo.setUserInfo({
+        name: data.name,
+        job: data.about,
+      });
+      editProfileModal.close();
+    })
+    .catch(handleError)
+    .finally(() => editProfileModal.setSaving(false));
+}
+
+function handleDeleteCard(card) {
+  {
+    confirmPopup.setSubmitFunction(() => {
+      confirmPopup.setSaving(true);
+      api
+        .deleteCard(card._id)
+        .then(() => {
+          card.remove();
+          confirmPopup.setSaving(false);
+          confirmPopup.close();
+        })
+        .catch(handleError);
+    });
+
+    confirmPopup.open();
+  }
 }
 
 function handleAddCardFormSubmit(inputValues) {
+  addCardModal.setSaving(true);
   const cardData = { name: inputValues.title, link: inputValues.url };
-  const newCard = createCard(cardData);
-  cardSection.addItem(newCard);
-  addCardModal.close();
-  modalAddForm.reset(); // clear the form
-  addCardFormValidator.disableButton(); // disable the button
+  api
+    .addCard(cardData)
+    .then((newCard) => {
+      const cardElement = createCard(newCard);
+      cardSection.addItem(cardElement);
+      addCardModal.close();
+      newCardEditForm.reset();
+      addCardFormValidator.disableButton();
+    })
+    .catch(handleError)
+    .finally(() => addCardModal.setSaving(false));
 }
 
-function createCard({ name, link }) {
-  const card = new Card({ name, link }, "#card-template", handleImageClick);
+function createCard(data) {
+  const card = new Card(
+    data,
+    "#card-template",
+    handleImageClick,
+    handleDeleteCard,
+    handleLikeClick
+  );
   const cardElement = card.getView();
   return cardElement;
+}
+
+function handleProfileImageFormSubmit(inputValues) {
+  const imageData = { avatar: inputValues.avatar };
+  profileImageModal.setSaving(true);
+  api
+    .updateProfilePicture(imageData)
+    .then((data) => {
+      userInfo.setUserInfo(imageData);
+      profileImageModal.close();
+      profileImageFormValidator.disableButton(config);
+      profileImageForm.reset();
+    })
+    .catch(handleError)
+    .finally(() => profileImageModal.setSaving(false));
 }
 
 // Select the buttons
 const addCardButton = document.querySelector(".profile__add-button");
 const editProfileButton = document.querySelector(".profile__edit-button");
+const confirmationButton = document.querySelector(".confirmation__button");
 
 // Select the modals
 const addCardModal = new PopupWithForm(
@@ -95,14 +162,66 @@ const editProfileModal = new PopupWithForm(
 // Set up event listeners
 addCardButton.addEventListener("click", () => addCardModal.open());
 editProfileButton.addEventListener("click", () => {
-  const { job, name } = userInfo.getUserInfo(); // get the data
-  // here you'll insert the job, name into the inputs value
+  const { job, name } = userInfo.getUserInfo();
+  profileTitleInput.value = name;
+  profileDescriptionInput.value = job;
   editProfileModal.open();
 });
 
 editProfileModal.setEventListeners();
 addCardModal.setEventListeners();
+confirmPopup.setEventListeners();
+profileImageModal.setEventListeners();
 
-//dev note for reviewer below
+//The Accursed API
+const api = new API({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "c371b666-258b-4f19-aeb9-028c93427d7f",
+    "Content-Type": "application/json",
+  },
+});
 
-// sorry about all of the resubmitions! I have been busy with college as this week was finals week. I thought maybe id need to send you the node_modules folder too to make my code work because I was not getting the error you were and all my modals worked.
+//The Foul Spawn of the API Demon
+function handleError(err) {
+  console.error("Request failed:", err);
+}
+
+api
+  .getInitialCards()
+  .then((cards) => {
+    cardSection.renderItems(cards);
+  })
+  .catch(handleError);
+
+api
+  .getUserInfo()
+  .then((data) => {
+    userInfo.setUserInfo({
+      name: data.name,
+      job: data.about,
+      avatar: data.avatar,
+    });
+    userInfo.setUserInfo(data.avatar);
+  })
+  .catch(handleError);
+
+function handleLikeClick(card) {
+  if (card.getIsLiked()) {
+    api
+      .dislikeCard(card.getId())
+      .then(() => {
+        card.setIsLiked(false);
+        card.renderLike();
+      })
+      .catch(handleError);
+  } else {
+    api
+      .likeCard(card.getId())
+      .then(() => {
+        card.setIsLiked(true);
+        card.renderLike();
+      })
+      .catch(handleError);
+  }
+}
