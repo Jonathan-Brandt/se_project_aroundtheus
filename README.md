@@ -16,7 +16,7 @@ This is the 3rd completed project I have done at TripleTen as a part of my acade
 
 **Plans for improvement**
 
-I will be working with this project further as a template for sprint 4 project 4.
+TBA
 
 **Github pages link**
 
